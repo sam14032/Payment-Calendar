@@ -18,7 +18,6 @@ namespace POC.Domain.Test.PaymentAggregate
         
             // Then
             comment.Text.Should().Be(text);
-            comment.Id.Should().Be(0);
         }
 
         [Theory]
