@@ -1,20 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using POC.Domain.Repository;
+using POC.Infrastructure.Context;
+using POC.Infrastructure.Repository;
+using MediatR;
+using POC.API.Extensions;
 
 namespace POC.API
 {
     public class Startup
     {
+        private const string DBConnectionString = "sqlite";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,9 +30,28 @@ namespace POC.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
+
+            services.AddTransient<PaymentContext>();
+            services.AddTransient<IPaymentContext, PaymentContext>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
+        }
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            ConfigureServices(services);
+            var connectionString = Configuration.GetConnectionString(DBConnectionString);
+            services.ConfigureDatabase(connectionString);
+        }
+        
+        public void ConfigureLocalServices(IServiceCollection services)
+        {
+            ConfigureServices(services);
+            var connectionString = Configuration.GetConnectionString(DBConnectionString);
+            services.ConfigureDatabase(connectionString);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +71,8 @@ namespace POC.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.InitializeDatabase();
 
             app.UseHttpsRedirection();
 

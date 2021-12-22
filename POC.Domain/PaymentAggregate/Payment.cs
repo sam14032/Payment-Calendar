@@ -1,5 +1,4 @@
-﻿using System;
-using POC.Domain.Enums;
+﻿using POC.Domain.Enums;
 using POC.Domain.Helpers;
 
 namespace POC.Domain.PaymentAggregate
