@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC.API", "POC.API\POC.API.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POC.Infrastructure", "POC.Infrastructure\POC.Infrastructure.csproj", "{9E67F493-3628-4364-9430-5E4384CEF97B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCML.Model", "POCML.Model\POCML.Model.csproj", "{6FA28772-357B-435C-934C-8F621E509CBB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCML.ConsoleApp", "POCML.ConsoleApp\POCML.ConsoleApp.csproj", "{F6AE59D8-3FD3-490E-8AE1-CCD099E4292A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC.Domain", "POC.Domain\POC.Domain.csproj", "{1EA3F3AF-0531-4EC8-A327-A2764A6F15FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC.Infrastructure.Test", "POC.Infrastructure.Test\POC.Infrastructure.Test.csproj", "{5DBA7B8C-F61C-4E49-A380-08170843FFD2}"
