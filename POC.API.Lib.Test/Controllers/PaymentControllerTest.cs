@@ -15,11 +15,16 @@ namespace POC.API.Lib.Test.Controllers
     {
         private Mock<IMediator> _mediator = new Mock<IMediator>();
 
+        public PaymentControllerTest()
+        {
+            Startup.Mediator = _mediator.Object;
+        }
+
         [Fact]
         public async Task GivenPayment_WhenPost_ThenShouldCallSendOnce()
         {
             // Given
-            PaymentController controller = new PaymentController(_mediator.Object);
+            PaymentController controller = new PaymentController();
             var payment = new Payment("Name", new Date(DateTime.Today, Frequency.Daily), 10, ContactMethods.Online, new Comment("Text"));
         
             // When
@@ -35,7 +40,7 @@ namespace POC.API.Lib.Test.Controllers
         public async Task GivenNamePayment_WhenGet_ThenShouldCallSendWithPaymentReturnOnce()
         {
             // Given
-            PaymentController controller = new PaymentController(_mediator.Object);
+            PaymentController controller = new PaymentController();
             var payment = new Payment("Name", new Date(DateTime.Today, Frequency.Daily), 10, ContactMethods.Online, new Comment("Text"));
 
             _mediator.Setup(x => x.Send<Payment>(It.IsAny<IRequest<Payment>>(),It.IsAny<CancellationToken>()));
@@ -51,7 +56,7 @@ namespace POC.API.Lib.Test.Controllers
         public async Task GivenNamePayment_WhenDelete_ThenShouldCallSendOnce()
         {
             // Given
-            PaymentController controller = new PaymentController(_mediator.Object);
+            PaymentController controller = new PaymentController();
             var payment = new Payment("Name", new Date(DateTime.Today, Frequency.Daily), 10, ContactMethods.Online, new Comment("Text"));
 
             _mediator.Setup(x => x.Send<Unit>(It.IsAny<IRequest<Unit>>(),It.IsAny<CancellationToken>()));
@@ -67,7 +72,7 @@ namespace POC.API.Lib.Test.Controllers
         public async Task GivenNamePayment_WhenGet_ThenShouldCallSendWithPaymentsReturnOnce()
         {
             // Given
-            PaymentController controller = new PaymentController(_mediator.Object);
+            PaymentController controller = new PaymentController();
             var payment = new Payment("Name", new Date(DateTime.Today, Frequency.Daily), 10, ContactMethods.Online, new Comment("Text"));
 
             _mediator.Setup(x => x.Send<List<Payment>>(It.IsAny<IRequest<List<Payment>>>(),It.IsAny<CancellationToken>()));

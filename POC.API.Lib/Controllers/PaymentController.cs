@@ -8,11 +8,11 @@ namespace POC.API.Lib.Controllers
 {
     public class PaymentController
     {
-        private IMediator _mediator;
+        private static IMediator _mediator;
 
-        public PaymentController(IMediator mediator)
+        public PaymentController()
         {
-            _mediator = mediator;
+            _mediator = Startup.Mediator;
         }
 
         public async Task Post(Payment payment)

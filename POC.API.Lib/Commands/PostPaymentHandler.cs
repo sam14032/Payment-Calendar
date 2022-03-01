@@ -6,7 +6,7 @@ using POC.Domain.Repository;
 
 namespace POC.API.Lib.Commands
 {
-    public class PostPaymentHandler : IRequestHandler<PostPayment>
+    public class PostPaymentHandler : IRequestHandler<PostPayment, Unit>
     {
         private IPaymentRepository _repository;
 
