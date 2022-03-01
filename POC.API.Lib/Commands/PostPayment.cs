@@ -3,7 +3,7 @@ using POC.API.Lib.Model;
 
 namespace POC.API.Lib.Commands
 {
-    public class PostPayment : IRequest
+    public class PostPayment : IRequest<Unit>
     {
         public Payment Payment { get; set; }
 

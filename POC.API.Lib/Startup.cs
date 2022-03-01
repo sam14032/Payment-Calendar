@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using POC.API.Lib.Commands;
 using POC.Domain.Repository;
 using POC.Infrastructure.Context;
 using POC.Infrastructure.Repository;
@@ -16,7 +18,7 @@ namespace POC.API.Lib
         private static IServiceCollection _services;
         private static IServiceProvider _serviceProvider;
 
-        public IMediator Mediator { get; private set; }
+        public static IMediator Mediator { get; set; }
 
         public Startup(IServiceCollection services, string connectionString)
         {
@@ -35,7 +37,7 @@ namespace POC.API.Lib
         {
             _services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            _services.AddTransient<DbContext, PaymentContext>();
+            _services.AddTransient<PaymentContext>();
             _services.AddTransient<IPaymentContext, PaymentContext>();
             _services.AddTransient<IPaymentRepository, PaymentRepository>();
         }
@@ -56,7 +58,7 @@ namespace POC.API.Lib
             var services = _services.AddDbContext<IPaymentContext ,PaymentContext>(option => option.UseSqlite(connection));
             _serviceProvider = services.BuildServiceProvider();
 
-            var context = _serviceProvider.GetRequiredService<DbContext>();
+            var context = _serviceProvider.GetRequiredService<PaymentContext>();
 
             context.Database.Migrate();
         }

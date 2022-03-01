@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using System;
 using FluentAssertions;
+using Moq;
+using POC.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace POC.API.Lib.Test
 {
@@ -10,13 +13,12 @@ namespace POC.API.Lib.Test
     {
         private IServiceCollection _serviceCollection;
         private Startup _startup;
-        private string connectionString = "DataSource=migration.db;mode=ReadWriteCreate;cache=shared";
+        private string connectionString = "Data Source=InMemorySample;Mode=Memory;Cache=Shared";
 
         public StartupTest()
         {
             _serviceCollection = new ServiceCollection();
             _startup = new Startup(_serviceCollection, connectionString);
-            _startup.ConfigureServices();
         }
 
         [Fact]
@@ -37,7 +39,7 @@ namespace POC.API.Lib.Test
         {
             // Given
             var serviceCollection = new ServiceCollection();
-            var startup = new Startup(_serviceCollection, connectionString);
+            var startup = new Startup(serviceCollection, connectionString);
 
             // When
             Action action = () => startup.ConfigureServices();
