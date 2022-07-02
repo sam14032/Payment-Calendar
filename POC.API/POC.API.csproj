@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\POC.API.Lib\POC.API.Lib.csproj" />
     <ProjectReference Include="..\POC.Domain\POC.Domain.csproj" />
     <ProjectReference Include="..\POC.Infrastructure\POC.Infrastructure.csproj" />
   </ItemGroup>

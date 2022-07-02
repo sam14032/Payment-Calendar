@@ -38,6 +38,8 @@ namespace POC.API.Lib
             _services.AddMediatR(Assembly.GetExecutingAssembly());
 
             _services.AddTransient<PaymentContext>();
+
+            _services.AddTransient<PaymentContext>();
             _services.AddTransient<IPaymentContext, PaymentContext>();
             _services.AddTransient<IPaymentRepository, PaymentRepository>();
         }

@@ -10,6 +10,7 @@ using POC.Infrastructure.Context;
 using POC.Infrastructure.Repository;
 using MediatR;
 using POC.API.Extensions;
+using APIStartup = POC.API.Lib.Startup;
 
 namespace POC.API
 {
@@ -27,6 +28,12 @@ namespace POC.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             services.AddControllers();
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
@@ -56,13 +63,17 @@ namespace POC.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                c.SerializeAsV2 = true;
+            });
             
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "POC API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
             });
 
             if (env.IsDevelopment())
