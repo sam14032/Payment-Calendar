@@ -59,13 +59,13 @@ namespace POC.API.Lib.Test.Controllers
             PaymentController controller = new PaymentController();
             var payment = new Payment("Name", new Date(DateTime.Today, Frequency.Daily), 10, ContactMethods.Online, new Comment("Text"));
 
-            _mediator.Setup(x => x.Send<Unit>(It.IsAny<IRequest<Unit>>(),It.IsAny<CancellationToken>()));
+            _mediator.Setup(x => x.Send<int>(It.IsAny<IRequest<int>>(),It.IsAny<CancellationToken>()));
 
             // When
             await controller.Delete("Name");
 
             // Then
-            _mediator.Verify(x => x.Send<Unit>(It.IsAny<IRequest<Unit>>(),It.IsAny<CancellationToken>()), Times.Once);
+            _mediator.Verify(x => x.Send<int>(It.IsAny<IRequest<int>>(),It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]

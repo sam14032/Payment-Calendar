@@ -6,7 +6,7 @@ using POC.Domain.Repository;
 
 namespace POC.API.Lib.Commands
 {
-    public class DeletePaymentHandler : IRequestHandler<DeletePayment>
+    public class DeletePaymentHandler : IRequestHandler<DeletePayment, int>
     {
         private IPaymentRepository _repository;
 
@@ -15,7 +15,7 @@ namespace POC.API.Lib.Commands
             _repository = repository;
         }
 
-        public async Task<Unit> Handle(DeletePayment request, CancellationToken cancellationToken = default)
+        public async Task<int> Handle(DeletePayment request, CancellationToken cancellationToken = default)
         {
             if(string.IsNullOrEmpty(request.Name))
             {
@@ -24,7 +24,7 @@ namespace POC.API.Lib.Commands
             
             await _repository.DeletePayment(request.Name);
 
-            return Unit.Value;
+            return 0;
         }
         
     }

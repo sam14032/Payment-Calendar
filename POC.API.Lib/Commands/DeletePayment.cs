@@ -2,7 +2,7 @@ using MediatR;
 
 namespace POC.API.Lib.Commands
 {
-    public class DeletePayment : IRequest
+    public class DeletePayment : IRequest<int>
     {
         public string Name { get; set; }
         
