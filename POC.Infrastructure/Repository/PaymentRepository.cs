@@ -59,8 +59,9 @@ namespace POC.Infrastructure.Repository
             await _db.SaveChangesAsync();
         }
 
-        public async Task DeletePayment(string name)
+        public async Task<int> DeletePayment(string name)
         {
+            var code = 404;
             var payment = await FirstOrDefault(name);
             if(payment != null)
             {
@@ -68,7 +69,9 @@ namespace POC.Infrastructure.Repository
                 _db.Dates.Remove(payment.Date);
                 _db.Comments.Remove(payment.Comment);
                 await _db.SaveChangesAsync();
+                code = 0;
             }
+            return code;
         }
 
         public async Task<DomainPayment> GetPayment(string name)

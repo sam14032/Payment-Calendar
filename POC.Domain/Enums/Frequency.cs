@@ -4,6 +4,7 @@ namespace POC.Domain.Enums
     {
         Daily,
         Weekly,
+        Monthly,
         Yearly
     }
 }

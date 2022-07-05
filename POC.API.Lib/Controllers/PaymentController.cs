@@ -30,9 +30,9 @@ namespace POC.API.Lib.Controllers
             return await _mediator.Send(new GetPayment(name));
         }
         
-        public async Task Delete(string name)
+        public async Task<int> Delete(string name)
         {
-            await _mediator.Send(new DeletePayment(name));
+            return await _mediator.Send(new DeletePayment(name));
         }
     }
 }

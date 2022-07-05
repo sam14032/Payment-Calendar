@@ -230,6 +230,31 @@ namespace POC.Infrastructure.Test.Repository
         }
         
         [Fact]
+        public async Task GivenExistingPaymentWithEmptyComment_WhenGetPayment_ThenShouldReturnPaymentWithEmptyComment()
+        {
+            // Given
+            var name = "Poutine";
+            var domainPayment =
+                new DomainPayment(
+                    name,
+                    new DomainDate(
+                        DateTime.Today,
+                        Frequency.Daily
+                    ),
+                    10,
+                    ContactMethods.Online,
+                    new DomainComment(string.Empty)
+                );
+            await paymentRepository.AddPayment(domainPayment);
+
+            // When
+            var payment = await paymentRepository.GetPayment(name);
+
+            // Then
+            payment.Should().BeEquivalentTo(domainPayment);
+        }
+        
+        [Fact]
         public async Task GivenNoPayment_WhenGetPayment_ThenShouldReturnNoPayment()
         {
             // Given
@@ -243,7 +268,7 @@ namespace POC.Infrastructure.Test.Repository
         }
 
         [Fact]
-        public async Task GivenExistingPayment_WhenDeletePayment_ThenShouldBeDeleted()
+        public async Task GivenExistingPayment_WhenDeletePayment_ThenShouldReturnZero()
         {
             // Given
             var name = "Poutine";
@@ -264,23 +289,24 @@ namespace POC.Infrastructure.Test.Repository
             payment.Should().BeEquivalentTo(domainPayment);
 
             // When
-            await paymentRepository.DeletePayment(name);
+            var result = await paymentRepository.DeletePayment(name);
         
             // Then
             payment = await paymentRepository.GetPayment(name);
             payment.Should().BeNull();
+            result.Should().Be(0);
         }
         
         [Fact]
-        public async Task GivenInexistingPayment_WhenDeletePayment_ThenShouldNotThrow()
+        public async Task GivenInexistingPayment_WhenDeletePayment_ThenShouldReturn404()
         {
             // Given
 
             // When
-            Func<Task> action = async () => await paymentRepository.DeletePayment("name");
+            var result = await paymentRepository.DeletePayment("name");
         
             // Then
-            await action.Should().NotThrowAsync();
+            result.Should().Be(404);
         }
 
         private DomainPayment CreateDomainPayment(string name)

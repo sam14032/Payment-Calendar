@@ -8,7 +8,6 @@ namespace POC.Domain.PaymentAggregate
 
         public Comment(string text)
         {
-            text.Validate();
             Text = text;
         }        
     }

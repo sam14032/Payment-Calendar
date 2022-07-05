@@ -9,6 +9,6 @@ namespace POC.Domain.Repository
         Task AddPayment(Payment payment);
         Task<Payment> GetPayment(string name);
         Task<List<Payment>> GetPayments();
-        Task DeletePayment(string name);
+        Task<int> DeletePayment(string name);
     }
 }

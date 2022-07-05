@@ -23,7 +23,7 @@ namespace POC.Domain.Test.PaymentAggregate
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        public void GivenNullOrEmptyText_WhenCreate_ThenShouldThrowException(string text)
+        public void GivenNullOrEmptyText_WhenCreate_ThenShouldNotThrowException(string text)
         {
             // Given
         
@@ -31,7 +31,7 @@ namespace POC.Domain.Test.PaymentAggregate
             Action action = () => new Comment(text);
         
             // Then
-            action.Should().Throw<Exception>();
+            action.Should().NotThrow<Exception>();
         }
     }
 }
